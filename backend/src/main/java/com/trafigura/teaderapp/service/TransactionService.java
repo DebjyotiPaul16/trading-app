@@ -65,7 +65,7 @@ public class TransactionService {
         List<Transaction> allTx = transactionRepository.findAll();
         Map<String, Transaction> latestByTrade = allTx.stream()
                 .collect(Collectors.toMap(
-                        Transaction::getTradeId,                  // key: now String
+                        Transaction::getTradeId,
                         t -> t,
                         (t1, t2) -> t1.getVersion() > t2.getVersion() ? t1 : t2
                 ));
