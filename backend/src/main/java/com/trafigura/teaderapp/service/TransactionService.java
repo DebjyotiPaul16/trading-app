@@ -21,7 +21,7 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
 
     public void processInsert(Transaction tx) {
-        tx.setTradeId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+        tx.setTradeId(UUID.randomUUID().toString());
         tx.setVersion(1);
         transactionRepository.save(tx);
     }
@@ -41,7 +41,7 @@ public class TransactionService {
         transactionRepository.save(tx);
     }
 
-    public void processCancel(Long tradeId, String createdBy) {
+    public void processCancel(String tradeId, String createdBy) {
         List<Transaction> existing = transactionRepository.findByTradeIdOrderByVersionDesc(tradeId);
         if (existing.isEmpty()) {
             throw new IllegalArgumentException("No existing trade found with ID " + tradeId);
@@ -63,9 +63,9 @@ public class TransactionService {
 
     public List<Position> getPositions() {
         List<Transaction> allTx = transactionRepository.findAll();
-        Map<Long, Transaction> latestByTrade = allTx.stream()
+        Map<String, Transaction> latestByTrade = allTx.stream()
                 .collect(Collectors.toMap(
-                        Transaction::getTradeId,
+                        Transaction::getTradeId,                  // key: now String
                         t -> t,
                         (t1, t2) -> t1.getVersion() > t2.getVersion() ? t1 : t2
                 ));

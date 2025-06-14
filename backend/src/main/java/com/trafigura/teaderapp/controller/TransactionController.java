@@ -34,7 +34,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/transactions/{tradeId}")
-    public ResponseEntity<String> cancelTransaction(@PathVariable Long tradeId, @RequestParam String createdBy) {
+    public ResponseEntity<String> cancelTransaction(@PathVariable String tradeId, @RequestParam String createdBy) {
         transactionService.processCancel(tradeId, createdBy);
         return ResponseEntity.ok("Transaction cancelled");
     }

@@ -19,7 +19,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    private Long tradeId;
+    private String tradeId;
     private Integer version;
     private String securityCode;
     private Integer quantity;
