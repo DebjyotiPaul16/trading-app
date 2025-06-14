@@ -21,7 +21,7 @@ function PositionsTable() {
           {data?.map((pos) => (
             <tr key={pos.securityCode}>
               <td>{pos.securityCode}</td>
-              <td>{pos.quantity}</td>
+              <td>{pos.quantity > 0 ? `+${pos.quantity}` : pos.quantity}</td>
             </tr>
           ))}
         </tbody>
